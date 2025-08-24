@@ -5,13 +5,17 @@
 .quiz-header {
   margin-bottom: 1.5rem;
   padding-bottom: 1rem;
-  border-bottom: 2px solid #f0f0f0;
+  border-bottom: 2px solid rgba(0, 0, 0, 0.05);
 }
 
 .quiz-header h2 {
   margin-top: 0;
   margin-bottom: 0.5rem;
   color: #333;
+  background: linear-gradient(90deg, #1890ff, #2b32b2);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
 .quiz-date {
@@ -25,13 +29,21 @@
 
 .question-answer {
   margin-bottom: 1.5rem;
-  padding-bottom: 1rem;
-  border-bottom: 1px solid #eee;
+  padding: 1rem;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  transition: all 0.3s;
+}
+
+.question-answer:hover {
+  background: rgba(255, 255, 255, 0.7);
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
 }
 
 .question-answer:last-child {
   margin-bottom: 0;
-  border-bottom: none;
 }
 
 .question {
@@ -44,6 +56,7 @@
   display: inline-block;
   width: 25px;
   font-weight: bold;
+  color: #1890ff;
 }
 
 .answer {

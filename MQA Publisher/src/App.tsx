@@ -8,6 +8,7 @@ import Admin from "./pages/Admin";
 import Login from "./pages/Login";
 import "./index.css";
 import type { User } from "firebase/auth";
+import Navbar from "./components/Navbar";
 
 function App() {
   const [user, setUser] = useState<User | null>(null);
@@ -26,6 +27,7 @@ function App() {
   return (
     <AuthProvider>
       <BrowserRouter>
+        <Navbar />
         <Routes>
           <Route path="/" element={<Home />} />
           <Route

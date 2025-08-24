@@ -1,4 +1,5 @@
 .admin-container {
+  position: relative;
   max-width: 1200px;
   margin: 0 auto;
   padding: 20px;
@@ -14,6 +15,10 @@
 .admin-container h1 {
   margin: 0;
   color: #333;
+  background: linear-gradient(90deg, #1890ff, #2b32b2);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
 .user-info {
@@ -27,16 +32,19 @@
 }
 
 .logout-btn {
-  background: #ff4d4f;
+  background: linear-gradient(90deg, #ff4d4f, #f5222d);
   color: white;
   border: none;
   padding: 0.5rem 1rem;
   border-radius: 4px;
   cursor: pointer;
+  transition: all 0.3s;
 }
 
 .logout-btn:hover {
-  background: #ff7875;
+  background: linear-gradient(90deg, #ff7875, #ff4d4f);
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(245, 34, 45, 0.2);
 }
 
 .admin-content {
@@ -45,11 +53,18 @@
   gap: 2rem;
 }
 
+/* Add glassmorphism to form */
 .quiz-form {
-  background: white;
-  border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  position: relative;
+  background: rgba(255, 255, 255, 0.25);
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  box-shadow: 0 8px 32px rgba(0, 31, 63, 0.1),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.7);
   padding: 1.5rem;
+  overflow: hidden;
 }
 
 .form-group {
@@ -67,10 +82,19 @@
 .form-group select {
   width: 100%;
   padding: 0.75rem;
-  border: 1px solid #ddd;
+  background: rgba(255, 255, 255, 0.8);
+  border: 1px solid rgba(0, 0, 0, 0.1);
   border-radius: 4px;
   font-size: 1rem;
   box-sizing: border-box;
+  transition: all 0.3s;
+}
+
+.form-group input:focus,
+.form-group select:focus {
+  outline: none;
+  border-color: #1890ff;
+  box-shadow: 0 0 0 3px rgba(24, 144, 255, 0.2);
 }
 
 .form-row {
@@ -83,15 +107,23 @@
 }
 
 .question-item {
-  background: #f9f9f9;
+  background: rgba(255, 255, 255, 0.5);
   padding: 1rem;
-  border-radius: 4px;
+  border-radius: 8px;
   margin-bottom: 1rem;
   position: relative;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  transition: all 0.3s;
+}
+
+.question-item:hover {
+  background: rgba(255, 255, 255, 0.7);
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
 }
 
 .remove-btn {
-  background: #ff4d4f;
+  background: linear-gradient(90deg, #ff4d4f, #f5222d);
   color: white;
   border: none;
   padding: 0.4rem 0.8rem;
@@ -100,6 +132,13 @@
   position: absolute;
   top: 1rem;
   right: 1rem;
+  transition: all 0.3s;
+}
+
+.remove-btn:hover {
+  background: linear-gradient(90deg, #ff7875, #ff4d4f);
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(245, 34, 45, 0.2);
 }
 
 .add-question-btn {
@@ -107,14 +146,16 @@
   color: #1890ff;
   border: 1px dashed #1890ff;
   padding: 0.75rem;
-  border-radius: 4px;
+  border-radius: 8px;
   width: 100%;
   margin-bottom: 1rem;
   cursor: pointer;
+  transition: all 0.3s;
 }
 
 .add-question-btn:hover {
-  background: #e6f7ff;
+  background: rgba(24, 144, 255, 0.1);
+  border-color: #40a9ff;
 }
 
 .form-actions {
@@ -127,19 +168,32 @@
   padding: 0.75rem 1.5rem;
 }
 
+.form-actions button[type="submit"] {
+  background: linear-gradient(90deg, #1890ff, #2b32b2);
+}
+
+.form-actions button[type="submit"]:hover {
+  background: linear-gradient(90deg, #40a9ff, #3f51b5);
+}
+
 .cancel-btn {
-  background: #f0f0f0;
-  color: #333;
+  background: rgba(0, 0, 0, 0.1) !important;
+  color: #333 !important;
 }
 
 .cancel-btn:hover {
-  background: #e0e0e0;
+  background: rgba(0, 0, 0, 0.2) !important;
 }
 
+/* Add glassmorphism to quiz list */
 .admin-container .quiz-list {
-  background: white;
-  border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  background: rgba(255, 255, 255, 0.25);
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  box-shadow: 0 8px 32px rgba(0, 31, 63, 0.1),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.7);
   padding: 1.5rem;
   max-height: 80vh;
   overflow: auto;
@@ -147,6 +201,7 @@
 
 .admin-container .quiz-list h2 {
   margin-top: 0;
+  color: #333;
 }
 
 .admin-container .quiz-list ul {
@@ -160,7 +215,12 @@
   justify-content: space-between;
   align-items: center;
   padding: 1rem 0;
-  border-bottom: 1px solid #eee;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+  transition: all 0.3s;
+}
+
+.quiz-list-item:hover {
+  transform: translateX(5px);
 }
 
 .quiz-list-item:last-child {
