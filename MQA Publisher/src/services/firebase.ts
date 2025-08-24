@@ -14,3 +14,15 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 export const auth = getAuth(app);
 export const db = getFirestore(app);
+
+// Secondary auth (lazy) for creating users without swapping primary session
+import type { Auth } from "firebase/auth";
+let secondaryAuth: Auth | null = null;
+
+export function getSecondaryAuth(): Auth {
+  if (!secondaryAuth) {
+    const secondaryApp = initializeApp(firebaseConfig, "Secondary");
+    secondaryAuth = getAuth(secondaryApp);
+  }
+  return secondaryAuth;
+}

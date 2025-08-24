@@ -19,7 +19,8 @@ function QuizCard({ quiz }: { quiz: Quiz }) {
               <span className="question-text">{question.text}</span>
             </div>
             <div className="answer">
-              <strong>Answer:</strong> {question.answer}
+              <strong>Answer:</strong>
+              <div className="answer-text">{question.answer}</div>
             </div>
           </div>
         ))}

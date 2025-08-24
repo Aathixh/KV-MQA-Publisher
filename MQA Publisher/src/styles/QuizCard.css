@@ -68,3 +68,22 @@
   color: #333;
   margin-right: 5px;
 }
+
+.question-text,
+.answer-text {
+  white-space: pre-wrap; /* keep line breaks */
+  word-break: break-word; /* break long words */
+  overflow-wrap: anywhere; /* extra safety */
+}
+
+.answer-text {
+  margin-top: 4px;
+  color: #555;
+  line-height: 1.45;
+}
+
+/* Optional: prevent horizontal scroll on container */
+.quiz-card {
+  overflow-wrap: anywhere;
+  max-width: 100%;
+}

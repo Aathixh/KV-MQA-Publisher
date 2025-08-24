@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
 import {
@@ -9,8 +9,10 @@ import {
 } from "../services/firestore";
 import type { Quiz, Question } from "../services/firestore";
 import "../styles/Admin.css";
+import AdminManagement from "../components/AdminManagement";
 
 function Admin() {
+  const [showAdminManagement, setShowAdminManagement] = useState(false);
   const [quizzes, setQuizzes] = useState<Quiz[]>([]);
   const [loading, setLoading] = useState(true);
   const [editing, setEditing] = useState<string | null>(null);
@@ -37,6 +39,10 @@ function Admin() {
     } finally {
       setLoading(false);
     }
+  }
+
+  function toggleAdminManagement() {
+    setShowAdminManagement(!showAdminManagement);
   }
 
   function resetForm() {
@@ -146,171 +152,180 @@ function Admin() {
         <h1>Admin Dashboard</h1>
         <div className="user-info">
           <span>{currentUser?.email}</span>
+          <button onClick={toggleAdminManagement} className="admin-btn">
+            {showAdminManagement ? "Manage Quizzes" : "Manage Admins"}
+          </button>
           <button onClick={handleLogout} className="logout-btn">
             Logout
           </button>
         </div>
       </header>
 
-      <div className="admin-content">
-        <section className="quiz-form">
-          <h2>{editing ? "Edit Quiz" : "Add New Quiz"}</h2>
-          <form onSubmit={handleSubmit}>
-            <div className="form-group">
-              <label htmlFor="title">Quiz Title</label>
-              <input
-                type="text"
-                id="title"
-                value={formData.title}
-                onChange={(e) =>
-                  setFormData({ ...formData, title: e.target.value })
-                }
-                required
-              />
-            </div>
-            <div className="form-row">
+      {showAdminManagement ? (
+        <AdminManagement />
+      ) : (
+        <div className="admin-content">
+          <section className="quiz-form">
+            <h2>{editing ? "Edit Quiz" : "Add New Quiz"}</h2>
+            <form onSubmit={handleSubmit}>
               <div className="form-group">
-                <label htmlFor="month">Month</label>
-                <select
-                  id="month"
-                  value={formData.month}
-                  onChange={(e) =>
-                    setFormData({ ...formData, month: e.target.value })
-                  }
-                  required
-                >
-                  <option value="">Select Month</option>
-                  {[
-                    "January",
-                    "February",
-                    "March",
-                    "April",
-                    "May",
-                    "June",
-                    "July",
-                    "August",
-                    "September",
-                    "October",
-                    "November",
-                    "December",
-                  ].map((month) => (
-                    <option key={month} value={month}>
-                      {month}
-                    </option>
-                  ))}
-                </select>
-              </div>
-              <div className="form-group">
-                <label htmlFor="year">Year</label>
+                <label htmlFor="title">Quiz Title</label>
                 <input
-                  type="number"
-                  id="year"
-                  value={formData.year}
+                  type="text"
+                  id="title"
+                  value={formData.title}
                   onChange={(e) =>
-                    setFormData({ ...formData, year: parseInt(e.target.value) })
+                    setFormData({ ...formData, title: e.target.value })
                   }
                   required
                 />
               </div>
-            </div>
+              <div className="form-row">
+                <div className="form-group">
+                  <label htmlFor="month">Month</label>
+                  <select
+                    id="month"
+                    value={formData.month}
+                    onChange={(e) =>
+                      setFormData({ ...formData, month: e.target.value })
+                    }
+                    required
+                  >
+                    <option value="">Select Month</option>
+                    {[
+                      "January",
+                      "February",
+                      "March",
+                      "April",
+                      "May",
+                      "June",
+                      "July",
+                      "August",
+                      "September",
+                      "October",
+                      "November",
+                      "December",
+                    ].map((month) => (
+                      <option key={month} value={month}>
+                        {month}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+                <div className="form-group">
+                  <label htmlFor="year">Year</label>
+                  <input
+                    type="number"
+                    id="year"
+                    value={formData.year}
+                    onChange={(e) =>
+                      setFormData({
+                        ...formData,
+                        year: parseInt(e.target.value),
+                      })
+                    }
+                    required
+                  />
+                </div>
+              </div>
 
-            <h3>Questions & Answers</h3>
-            {formData.questions.map((question, index) => (
-              <div key={question.id} className="question-item">
-                <div className="form-group">
-                  <label>Question {index + 1}</label>
-                  <input
-                    type="text"
-                    value={question.text}
-                    onChange={(e) =>
-                      handleQuestionChange(index, "text", e.target.value)
-                    }
-                    required
-                  />
+              <h3>Questions & Answers</h3>
+              {formData.questions.map((question, index) => (
+                <div key={question.id} className="question-item">
+                  <div className="form-group">
+                    <label>Question {index + 1}</label>
+                    <input
+                      type="text"
+                      value={question.text}
+                      onChange={(e) =>
+                        handleQuestionChange(index, "text", e.target.value)
+                      }
+                      required
+                    />
+                  </div>
+                  <div className="form-group">
+                    <label>Answer</label>
+                    <textarea
+                      value={question.answer}
+                      onChange={(e) =>
+                        handleQuestionChange(index, "answer", e.target.value)
+                      }
+                      required
+                    />
+                  </div>
+                  {formData.questions.length > 1 && (
+                    <button
+                      type="button"
+                      className="remove-btn"
+                      onClick={() => removeQuestion(index)}
+                    >
+                      Remove
+                    </button>
+                  )}
                 </div>
-                <div className="form-group">
-                  <label>Answer</label>
-                  <input
-                    type="text"
-                    value={question.answer}
-                    onChange={(e) =>
-                      handleQuestionChange(index, "answer", e.target.value)
-                    }
-                    required
-                  />
-                </div>
-                {formData.questions.length > 1 && (
+              ))}
+
+              <button
+                type="button"
+                className="add-question-btn"
+                onClick={addQuestion}
+              >
+                + Add Question
+              </button>
+
+              <div className="form-actions">
+                <button type="submit" disabled={loading}>
+                  {loading
+                    ? "Saving..."
+                    : editing
+                    ? "Update Quiz"
+                    : "Create Quiz"}
+                </button>
+                {editing && (
                   <button
                     type="button"
-                    className="remove-btn"
-                    onClick={() => removeQuestion(index)}
+                    className="cancel-btn"
+                    onClick={resetForm}
                   >
-                    Remove
+                    Cancel
                   </button>
                 )}
               </div>
-            ))}
+            </form>
+          </section>
 
-            <button
-              type="button"
-              className="add-question-btn"
-              onClick={addQuestion}
-            >
-              + Add Question
-            </button>
-
-            <div className="form-actions">
-              <button type="submit" disabled={loading}>
-                {loading
-                  ? "Saving..."
-                  : editing
-                  ? "Update Quiz"
-                  : "Create Quiz"}
-              </button>
-              {editing && (
-                <button
-                  type="button"
-                  className="cancel-btn"
-                  onClick={resetForm}
-                >
-                  Cancel
-                </button>
-              )}
-            </div>
-          </form>
-        </section>
-
-        <section className="quiz-list">
-          <h2>Existing Quizzes</h2>
-          {loading ? (
-            <p>Loading quizzes...</p>
-          ) : quizzes.length === 0 ? (
-            <p>No quizzes available yet.</p>
-          ) : (
-            <ul>
-              {quizzes.map((quiz) => (
-                <li key={quiz.id} className="quiz-list-item">
-                  <div>
-                    <h3>{quiz.title}</h3>
-                    <p>
-                      {quiz.month} {quiz.year}
-                    </p>
-                  </div>
-                  <div className="actions">
-                    <button onClick={() => handleEdit(quiz)}>Edit</button>
-                    <button
-                      className="delete-btn"
-                      onClick={() => handleDelete(quiz.id)}
-                    >
-                      Delete
-                    </button>
-                  </div>
-                </li>
-              ))}
-            </ul>
-          )}
-        </section>
-      </div>
+          <section className="quiz-list">
+            <h2>Existing Quizzes</h2>
+            {loading ? (
+              <p>Loading quizzes...</p>
+            ) : quizzes.length === 0 ? (
+              <p>No quizzes available yet.</p>
+            ) : (
+              <ul>
+                {quizzes.map((quiz) => (
+                  <li key={quiz.id} className="quiz-list-item">
+                    <div>
+                      <h3>{quiz.title}</h3>
+                      <p>
+                        {quiz.month} {quiz.year}
+                      </p>
+                    </div>
+                    <div className="actions">
+                      <button onClick={() => handleEdit(quiz)}>Edit</button>
+                      <button
+                        className="delete-btn"
+                        onClick={() => handleDelete(quiz.id)}
+                      >
+                        Delete
+                      </button>
+                    </div>
+                  </li>
+                ))}
+              </ul>
+            )}
+          </section>
+        </div>
+      )}
     </div>
   );
 }

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
 import "../styles/Login.css";
 
@@ -9,7 +9,10 @@ function Login() {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
-  const { login } = useAuth();
+  const location = useLocation();
+  const { login, lastRemovedDeleted } = useAuth();
+
+  const removedParam = new URLSearchParams(location.search).get("removed");
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -17,7 +20,12 @@ function Login() {
     try {
       setError("");
       setLoading(true);
-      await login(email, password);
+      const cred = await login(email, password);
+      if (!cred) {
+        // Account deleted during enforcement
+        setError("Your account has been removed. Contact a super admin.");
+        return;
+      }
       navigate("/admin");
     } catch (error) {
       setError("Failed to sign in. Please check your credentials.");
@@ -30,6 +38,11 @@ function Login() {
   return (
     <div className="login-container">
       <h2>Admin Login</h2>
+      {(lastRemovedDeleted || removedParam) && !error && (
+        <div className="error-message">
+          Your admin access was removed. Contact a super admin.
+        </div>
+      )}
       {error && <div className="error-message">{error}</div>}
       <form onSubmit={handleSubmit}>
         <div className="form-group">

@@ -253,3 +253,116 @@
     grid-template-columns: 1fr;
   }
 }
+
+.admin-btn {
+  background: linear-gradient(90deg, #1890ff, #2b32b2);
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-right: 0.5rem;
+  transition: all 0.3s;
+}
+
+.admin-btn:hover {
+  background: linear-gradient(90deg, #40a9ff, #3f51b5);
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(24, 144, 255, 0.2);
+}
+
+/* ...existing code... */
+
+/* Question block layout */
+.question-item {
+  border: 1px solid #e3e6eb;
+  border-radius: 6px;
+  padding: 12px 14px;
+  margin-bottom: 14px;
+  background: #fff;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* Shared form-group styles (keep existing if already defined) */
+.question-item .form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin: 0;
+}
+
+/* Labels */
+.question-item .form-group label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #2d3642;
+  letter-spacing: 0.3px;
+}
+
+/* Inputs + textarea unified look */
+.question-item .form-group input,
+.question-item .form-group textarea {
+  width: 100%;
+  font: 400 0.9rem/1.35 "Segoe UI", Arial, sans-serif;
+  padding: 8px 10px;
+  border: 1px solid #ccd3db;
+  border-radius: 4px;
+  background: #fdfefe;
+  resize: vertical; /* allow vertical only */
+  min-height: 40px;
+  box-sizing: border-box;
+  transition: border-color 0.12s ease;
+}
+
+/* Answer textarea specific */
+.question-item .form-group textarea {
+  min-height: 90px;
+  max-height: 320px;
+  line-height: 1.4;
+  overflow-y: auto;
+  scrollbar-width: thin;
+}
+
+/* Focus */
+.question-item .form-group input:focus,
+.question-item .form-group textarea:focus {
+  outline: none;
+  border-color: #1890ff;
+  box-shadow: 0 0 0 2px rgba(24, 144, 255, 0.15);
+  background: #fff;
+}
+
+/* Placeholder */
+.question-item .form-group input::placeholder,
+.question-item .form-group textarea::placeholder {
+  color: #9aa4b1;
+}
+
+/* Remove button inside question */
+.question-item .remove-btn {
+  align-self: flex-start;
+  background: #ff4d4f;
+  border: none;
+  color: #fff;
+  padding: 6px 12px;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  cursor: pointer;
+}
+
+.question-item .remove-btn:hover {
+  background: #d9363e;
+}
+
+/* Responsive tweak */
+@media (max-width: 640px) {
+  .question-item {
+    padding: 10px 12px;
+  }
+  .question-item .form-group textarea {
+    min-height: 80px;
+  }
+}
+/* ...existing code... */
