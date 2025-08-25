@@ -9,6 +9,7 @@ import {
   query,
   orderBy,
   Timestamp,
+  serverTimestamp,
 } from "firebase/firestore";
 import { db } from "./firebase";
 
@@ -53,7 +54,7 @@ export const getQuiz = async (id: string) => {
 export const addQuiz = async (quiz: Omit<Quiz, "id" | "createdAt">) => {
   return await addDoc(collection(db, "quizzes"), {
     ...quiz,
-    createdAt: Timestamp.now(),
+    createdAt: serverTimestamp(),
   });
 };
 
