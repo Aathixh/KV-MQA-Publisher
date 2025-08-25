@@ -2,6 +2,8 @@ import { useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
 import "../styles/Login.css";
+import showIcon from "../assets/eye.png";
+import hideIcon from "../assets/hidden.png";
 
 function Login() {
   const [email, setEmail] = useState("");
@@ -11,6 +13,7 @@ function Login() {
   const navigate = useNavigate();
   const location = useLocation();
   const { login, lastRemovedDeleted } = useAuth();
+  const [showPassword, setShowPassword] = useState(false);
 
   const removedParam = new URLSearchParams(location.search).get("removed");
 
@@ -57,13 +60,27 @@ function Login() {
         </div>
         <div className="form-group">
           <label htmlFor="password">Password</label>
-          <input
-            type="password"
-            id="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-          />
+          <div className="password-field-wrapper">
+            <input
+              type={showPassword ? "text" : "password"}
+              id="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+            />
+            <button
+              type="button"
+              className="toggle-password-btn"
+              onClick={() => setShowPassword((p) => !p)}
+              aria-label={showPassword ? "Hide password" : "Show password"}
+            >
+              <img
+                src={showPassword ? hideIcon : showIcon}
+                alt=""
+                draggable="false"
+              />
+            </button>
+          </div>
         </div>
         <button type="submit" disabled={loading}>
           {loading ? "Logging in..." : "Login"}
