@@ -63,6 +63,13 @@ function Home() {
           )}
         </div>
       </div>
+      <footer id="footer">
+        Developed By
+        <br />
+        <a href="https://www.linkedin.com/in/aathishrviswam">
+          Aathish R Viswam
+        </a>
+      </footer>
     </div>
   );
 }

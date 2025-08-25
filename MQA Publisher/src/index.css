@@ -56,3 +56,64 @@ button:focus {
   font-size: 1.2rem;
   color: #666;
 }
+
+:root {
+  --scrollbar-width: 12px;
+  --scrollbar-thumb: linear-gradient(180deg, #1890ff, #2b32b2);
+  --scrollbar-thumb-hover: linear-gradient(180deg, #40a9ff, #3f51b5);
+  --scrollbar-track: transparent;
+  --scrollbar-border-gap: 3px;
+}
+
+/* Firefox (applies to everything) */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #1890ff55 var(--scrollbar-track);
+}
+
+/* WebKit (Chrome, Edge, Safari) */
+::-webkit-scrollbar {
+  width: var(--scrollbar-width);
+  height: var(--scrollbar-width);
+}
+
+::-webkit-scrollbar-track {
+  background: var(--scrollbar-track);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--scrollbar-thumb);
+  border-radius: 999px;
+  border: var(--scrollbar-border-gap) solid rgba(255, 255, 255, 0.5);
+  background-clip: padding-box;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--scrollbar-thumb-hover);
+  border: var(--scrollbar-border-gap) solid rgba(255, 255, 255, 0.55);
+}
+
+::-webkit-scrollbar-corner {
+  background: transparent;
+}
+
+/* Optional: reduce width on very small screens */
+@media (max-width: 600px) {
+  :root {
+    --scrollbar-width: 10px;
+    --scrollbar-border-gap: 2px;
+  }
+}
+
+/* Optional dark mode tweak */
+@media (prefers-color-scheme: dark) {
+  * {
+    scrollbar-color: #3f82ff55 #00000010;
+  }
+  ::-webkit-scrollbar-thumb {
+    border: var(--scrollbar-border-gap) solid rgba(0, 0, 0, 0.4);
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    border: var(--scrollbar-border-gap) solid rgba(0, 0, 0, 0.45);
+  }
+}

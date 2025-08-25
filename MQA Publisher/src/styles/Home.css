@@ -1,12 +1,14 @@
 .home-container {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 20px;
+  padding: 0 20px 20px 20px;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
 
 .home-container header {
-  margin-bottom: 2rem;
-  text-align: center;
+  margin-bottom: 0rem;
 }
 
 .home-container h1 {
@@ -20,9 +22,11 @@
 }
 
 .home-container .content {
+  flex: 1;
   display: grid;
   grid-template-columns: 300px 1fr;
   gap: 2rem;
+  min-height: 0;
 }
 
 /* Add glassmorphism to quiz list */
@@ -34,8 +38,8 @@
   border: 1px solid rgba(255, 255, 255, 0.2);
   box-shadow: 0 8px 32px rgba(0, 31, 63, 0.1);
   padding: 1rem;
-  max-height: 70vh;
   overflow: auto;
+  max-height: unset;
 }
 
 .quiz-item {
@@ -78,8 +82,8 @@
   box-shadow: 0 8px 32px rgba(0, 31, 63, 0.1),
     inset 0 0 0 1px rgba(255, 255, 255, 0.7);
   padding: 1.5rem;
-  min-height: 400px;
-  overflow: hidden;
+  overflow: auto; /* enable scrolling */
+  min-height: 0;
 }
 
 .select-prompt {
@@ -91,13 +95,22 @@
   font-style: italic;
 }
 
+#footer {
+  text-align: center;
+  margin-top: 1.5rem;
+  padding: 1rem 0 0;
+  font-size: 0.9rem;
+  color: #666;
+}
+
 @media (max-width: 768px) {
   .home-container .content {
     grid-template-columns: 1fr;
   }
-
   .home-container .quiz-list {
-    max-height: 300px;
-    margin-bottom: 1rem;
+    max-height: 40vh;
+  }
+  .quiz-details {
+    max-height: 50vh;
   }
 }
